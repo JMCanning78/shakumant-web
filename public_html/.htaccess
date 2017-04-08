@@ -1,0 +1,13 @@
+RewriteEngine on
+
+RewriteCond %{HTTP_REFERER} !^$
+RewriteCond %{HTTP_REFERER} !^http://shakumant.com/.*$      [NC]
+RewriteCond %{HTTP_REFERER} !^http://shakumant.com$      [NC]
+RewriteCond %{HTTP_REFERER} !^http://www.shakumant.com/.*$      [NC]
+RewriteCond %{HTTP_REFERER} !^http://www.shakumant.com$      [NC]
+RewriteCond %{HTTP_REFERER} !^https://shakumant.com/.*$      [NC]
+RewriteCond %{HTTP_REFERER} !^https://shakumant.com$      [NC]
+RewriteCond %{HTTP_REFERER} !^https://www.shakumant.com/.*$      [NC]
+RewriteCond %{HTTP_REFERER} !^https://www.shakumant.com$      [NC]
+RewriteRule .*\.(jpg|jpeg|gif|png|bmp)$ - [F,NC]
+
