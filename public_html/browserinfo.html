@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+  
+  <head>
+    <title>Browser Info</title>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" >
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="browser-info-functions.js"></script>
+    <script>
+      function populate_all() {
+        populate_object_elements(navigator)
+        populate_object_elements(screen)
+        populate_object_elements(window)
+      };
+      /* setInterval(populate_all, 800); */
+    </script>
+    <style>
+      table {
+        font-family: arial, sans-serif;
+        border-collapse: collapse;
+        width: 100%;
+      }
+
+      td, th {
+        border: 1px solid #dddddd;
+        text-align: left;
+        padding: 8px;
+      }
+
+      tr:nth-child(even) {
+        background-color: #dddddd;
+      }
+    </style>
+  </head>
+
+  <body onload="populate_all()" onresize="populate_all()">
+    <h1>Browser Info</h1>
+    <p>You are viewing this webpage using a browser that reports the following 
+    info:</p>
+    <table>
+      <tr>
+	<th>Name</th>       <th>Value</th>
+      </tr>
+      <tr> <td>Navigator.appName</td> <td id="Navigator.appName"> </td> </tr>
+      <tr> <td>Navigator.appCodeName</td> <td id="Navigator.appCodeName"> </td> </tr>
+      <tr> <td>Navigator.appVersion</td> <td id="Navigator.appVersion"> </td> </tr>
+      <tr> <td>Navigator.cookieEnabled</td> <td id="Navigator.cookieEnabled"> </td> </tr>
+      <tr> <td>Navigator.javaEnabled</td> <td id="Navigator.javaEnabled"> </td> </tr>
+      <tr> <td>Navigator.language</td> <td id="Navigator.language"> </td> </tr>
+      <tr> <td>Navigator.onLine</td> <td id="Navigator.onLine"> </td> </tr>
+      <tr> <td>Navigator.platform</td> <td id="Navigator.platform"> </td> </tr>
+      <tr> <td>Navigator.product</td> <td id="Navigator.product"> </td> </tr>
+      <tr> <td>Navigator.userAgent</td> <td id="Navigator.userAgent"> </td> </tr>
+      <tr> <td>Screen.width</td> <td id="Screen.width"> </td> </tr>
+      <tr> <td>Screen.height</td> <td id="Screen.height"> </td> </tr>
+      <tr> <td>Screen.availWidth</td> <td id="Screen.availWidth"> </td> </tr>
+      <tr> <td>Screen.availHeight</td> <td id="Screen.availHeight"> </td> </tr>
+      <tr> <td>Window.innerWidth</td> <td id="Window.innerWidth"> </td> </tr>
+      <tr> <td>Window.innerHeight</td> <td id="Window.innerHeight"> </td> </tr>
+    </table>
+  </body>
+</html>
