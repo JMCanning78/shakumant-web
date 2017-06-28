@@ -1,81 +1,108 @@
 <!DOCTYPE html>
 <html>
+  
 <head>
-<title>Shakumant Software</title>
-<meta http-equiv="content-type" content="text/html; charset=utf-8" >
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<style type="text/css">
-body {
-  /*background: linear-gradient(90deg, white, gray);*/
-  background-color: #eee;
-}
-
-body, h1, p {
-  font-family: "Helvetica Neue", "Segoe UI", Segoe, Helvetica, Arial, "Lucida Grande", sans-serif;
-  font-weight: normal;
-  margin: 0;
-  padding: 0;
-  text-align: center;
-}
-
-.container {
-  margin-left:  auto;
-  margin-right:  auto;
-  margin-top: 177px;
-  max-width: 1170px;
-  padding-right: 15px;
-  padding-left: 15px;
-}
-
-.row:before, .row:after {
-  display: table;
-  content: " ";
-}
-
-h1 {
-  font-size: 48px;
-  font-weight: 300;
-  margin: 0 0 20px 0;
-}
-
-.lead {
-  font-size: 21px;
-  font-weight: 200;
-  margin-bottom: 20px;
-}
-
-p {
-  margin: 0 0 10px;
-}
-
-a {
-  color: #3282e6;
-  text-decoration: none;
-}
-</style>
+  <title>Shakumant Software</title>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8" >
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="keywords" content="Big Data Analytics, Shakumant, Software Consulting">
+  <script src="main-functions.js"></script>
+  <link rel="stylesheet" type="text/css" href="main-styles.css">
 </head>
 
 <body>
-<div class="container text-center" id="error">
+  <div class="header">
+    <h1>Shakumant Software</h1>
+  </div>
 
-  <svg height="100" width="100">
-    <circle cx="50" cy="50" r="31" stroke="#679b08" stroke-width="9.5" fill="none" />
-    <circle cx="50" cy="50" r="6" stroke="#679b08" stroke-width="1" fill="#679b08" />
-    <line x1="50" y1="50" x2="35" y2="50" style="stroke:#679b08;stroke-width:6" />
-    <line x1="65" y1="35" x2="50" y2="50" style="stroke:#679b08;stroke-width:6" />
-    <path d="M59 65 L83 65 L75 87 Z" fill="#679b08" />
-    <rect width="20" height="9" x="70" y="56" style="fill:#eee;stroke-width:0;" />
-  </svg>
-  <div class="row">
-    <div class="col-md-12">
-      <div class="main-icon text-success"><span class="uxicon uxicon-clock-refresh"></span></div>
-      <h1>Future home of something quite cool.</h1>
-      <p class="lead">If you're the <strong>site owner</strong>, <a href="/cpanel">log in</a> to launch this site</p>
-      <p class="lead">If you are a <strong>visitor</strong>, check back soon.</p>
+  <div class="clearfix">
+    <div class="column menu">
+      <ul class="menulist">
+	<li class="button" id="Home_chooser"
+	    onclick="display_choice('Home')">Home
+	</li>
+	<li class="button" id="Services_chooser"
+	    onclick="display_choice('Services')" >Services
+	</li>
+	<li class="button" id="Contact_Us_chooser"
+	    onclick="display_choice('Contact_Us')" >Contact Us
+	</li>
+      </ul>
+    </div>
+
+    <div class="column content">
+      <div class="chosen" id="Home">
+	<h1>Home</h1>
+	<p class="chosen">
+	  Analytic software provides the key information enterprises
+	  and government agencies use to achieve success in their
+	  missions today.  Shakumant Software is dedicated to ensuring
+	  our customers find the most meaningful and useful
+	  relationships buried in the masses of data they possess.
+	</p>
+	<p class="chosen">
+	  Shakumant Software consults with enterprises big and small
+	  to develop software that brings out meaningful insights.
+	  From temporary help on short-staffed projects to long-term
+	  development and support for mission critical analytics,
+	  Shakumant Software is ready to help you acheive success.
+	</p>
+      </div>
+      <div class="chosen" id="Services">
+	<h1>Services</h1>
+	<p class="chosen">
+	  Shakumant Software provides world class software development services
+	  in
+	  <ul>
+	    <li>data analytics,</li>
+	    <li>audio and imagery analytics,</li>
+	    <li>decision systems user interfaces,</li>
+	    <li>information architecture,</li>
+	    <li>data research, and</li>
+	    <li>algorithmic research.</li>
+	  </ul>
+	</p>
+	<p class="chosen">
+	  Our staff can fill various roles in the development and delivery
+	  process:
+	  <ul>
+	    <li>application development,</li>
+	    <li>requirements development,</li>
+	    <li>cloud development,</li>
+	    <li>hadoop development,</li>
+	    <li>technichal documentation and training development,</li>
+	    <li>end user training on analytics, and</li>
+	    <li>technical project management.</li>
+	  </ul>
+      </div>
+      <div class="chosen" id="Contact_Us">
+	<h1>Contact Us</h1>
+	<p class="chosen">To learn more, write us at
+	  <a onclick="send_info_email()">
+	    <img class="textgraphic" src="email-for-info.png" 
+		 alt="Info At Shakumant.com"></a>,
+	  or call
+	   <a onclick="call_info_phone()">
+	     <img class="textgraphic"  src="phone-shakumant-graphic.png" 
+		  alt="Our phone number"></a>
+	</p>
+	<p class="chosen">Postal address:
+	</p>
+	<div class="address_line">
+	  P.O. Box 27234
+	</div>
+	<div class="address_line">
+	  Seattle WA 98165
+	</div>
+      </div>
     </div>
   </div>
 
-</div>
-
+  <div class="footer">
+    <p class="footer">Copyright © 2017
+    </p>
+  </div>
+  
+  <script>display_choice('Home')</script>
 </body>
 </html>

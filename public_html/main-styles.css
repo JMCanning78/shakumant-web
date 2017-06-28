@@ -1,0 +1,147 @@
+* {
+    box-sizing: border-box;
+}
+
+body {
+  background: linear-gradient(90deg, #CCDDFF, white);
+  /*background-color: #eee;*/
+}
+
+body, h1, p {
+  font-family: "Helvetica Neue", "Segoe UI", Segoe, Helvetica, Arial, "Lucida Grande", sans-serif;
+  font-weight: normal;
+  margin: 0;
+  padding: 0;
+  text-align: center;
+}
+
+.button {
+    text-align: center;
+    border-radius: 6px;
+}
+
+li {
+    text-align: left;
+}
+
+.header {
+    background: linear-gradient(90deg, #99C4BC, #CCDDFF);
+    padding: 5px;
+    padding-top: 8px;
+}
+.column {
+    float: left;
+    padding: 5px 10px 0px 10px;
+}
+.clearfix::after {
+    content: "";
+    clear: both;
+    display: table;
+}
+.menu {
+    width: auto;
+    float: none;
+}
+.content {
+    width: 100%;
+}
+.menu ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+.menu li {
+    padding: 3px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    background-color: #3385a5;
+    color: #eefff0;
+}
+.menu li:hover {
+    background-color: #0066aa;
+}
+
+h1 {
+  font-size: 1.4em;
+  font-weight: 300;
+  margin: 0 0 8px 0;
+}
+
+p {
+  margin: 0 0 10px;
+}
+
+@media screen and (min-width: 680px) {
+    .menu {
+	width: 20%;
+	float: left;
+    }
+    .content {
+	width: 80%;
+    }
+    .menu li {
+	padding: 8px;
+	margin-top: 30px;
+	margin-bottom: 30px;
+    }
+    .button {
+	border-radius: 10px;
+    }
+    h1 {
+	font-size: 3.0em;
+	margin: 0 0 20px 0;
+    }
+    p {
+	margin: 0 0 10px;
+    }
+    .header {
+	padding: 15px;
+	padding-top: 25px;
+    }
+    .column {
+	padding: 15px;
+    }
+}
+
+.textgraphic {
+    height: 1.0em;
+    position: relative;
+    bottom:  -0.08em;
+}
+
+.textgraphic:hover {
+    background-color: #aaccff;
+}
+
+.row:before, .row:after {
+    display: table;
+    content: " ";
+}
+
+div.chosen {
+   /* display: none; */
+}
+
+p.chosen {
+    text-align: left;
+}
+
+.address_line {
+    display: block;
+    padding-left: 20px;
+    text-align: left;
+}
+
+.footer {
+    padding: 10px;
+}
+
+p.footer {
+    font-size: 0.8em;
+}
+
+a {
+  color: #3282e6;
+  text-decoration: none;
+}
+
