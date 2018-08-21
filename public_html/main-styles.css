@@ -29,6 +29,10 @@ li {
     padding: 5px;
     padding-top: 8px;
 }
+.header img {
+    width: 95%;
+}
+
 .column {
     float: left;
     padding: 5px 10px 0px 10px;
