@@ -24,7 +24,8 @@ function send_info_email() {
 	    host = host.slice(prefix.length)
 	}
     }
-    var mailloc = 'mailto' + ':' + 'info@' + host + '?subject=More%20info';
+    var mailloc = 'mailto' + ':' + 'info@' + host +
+	'?subject=More%20info%20please';
     window.location.assign(mailloc);
 }
 function call_info_phone() {
