@@ -25,18 +25,42 @@ li {
 }
 
 .header {
-    background: linear-gradient(90deg, #99C4BC, #CCDDFF);
-    padding: 5px;
+    background:  linear-gradient(90deg, #99C4BC, #CCDDFF);
+    padding:     5px;
     padding-top: 8px;
 }
+
+.smallheader {
+    background:  linear-gradient(90deg, #99C4BC, #CCDDFF);
+    padding:     10px;
+    padding-top: 15px;
+}
+
 .header img {
     width: 95%;
 }
 
-.column {
-    float: left;
-    padding: 5px 10px 0px 10px;
+a.homelink {
+    position:    absolute;
+    left:        5px;
+    top:         5px;
+    vertical-align: middle;
 }
+
+img.homelinklogo {
+    height:      20px;
+    float:       left;
+}
+
+.column {
+    float:       left;
+    padding:     5px 10px 0px 10px;
+}
+
+.row {
+    padding:     5px 10px 0px 10px;
+}
+
 .clearfix::after {
     content: "";
     clear: both;
@@ -46,22 +70,27 @@ li {
     width: auto;
     float: none;
 }
+.rowmenu {
+    width: max-content;
+    display: block;
+    margin: auto;
+}
 .content {
     width: 100%;
 }
-.menu ul {
+.menu ul, .rowmenu ul {
     list-style-type: none;
     margin: 0;
     padding: 0;
 }
-.menu li {
+.menu li, .rowmenu li {
     padding: 3px;
     margin-top: 10px;
     margin-bottom: 10px;
     background-color: #3385a5;
     color: #eefff0;
 }
-.menu li:hover {
+.menu li:hover, .rowmenu li:hover {
     background-color: #0066aa;
 }
 
@@ -88,6 +117,15 @@ p {
 	margin-top: 30px;
 	margin-bottom: 30px;
     }
+    .menulist {
+	display:  inline-flex;
+    }
+    .rowmenu li {
+	max-width: 30%;
+	padding: 8px;
+	margin-left: 10px;
+	margin-right: 10px;
+    }
     .button {
 	border-radius: 10px;
     }
@@ -101,6 +139,13 @@ p {
     .header {
 	padding: 15px;
 	padding-top: 25px;
+    }
+    .smallheader {
+	padding: 10px;
+	padding-top: 25px;
+    }
+    .homelinklogo {
+	height:  40px;
     }
     .column {
 	padding: 15px;
@@ -128,6 +173,10 @@ div.chosen {
 
 p.chosen {
     text-align: left;
+}
+
+p.centered {
+    text-align: center;
 }
 
 .address_line {

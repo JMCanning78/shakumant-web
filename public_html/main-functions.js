@@ -12,6 +12,7 @@ function display_choice(id) {
 /*    alert('Setting ' + id + '.display = "block"'); */
     document.getElementById(id).style.display = "block";
 }
+
 function send_info_email() {
     var prefixes = ['www.' ];
     var host = window.location.hostname;
@@ -28,12 +29,17 @@ function send_info_email() {
 	'?subject=More%20info%20please';
     window.location.assign(mailloc);
 }
+
 function call_info_phone() {
     var seq = '0380';
     var areacode = '(971)-';
     var exchange = '251-';
     var uri = 'tel:' + '+1' + areacode + exchange + seq;
     window.location.assign(uri);
+}
+
+function download_file(path) {
+    window.open(path, '')
 }
 
 

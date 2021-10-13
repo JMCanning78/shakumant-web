@@ -5,27 +5,44 @@
   <title>Data Structure Visualizations</title>
   <meta http-equiv="content-type" content="text/html; charset=utf-8" >
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" type="text/css" href="main-styles.css">
+  <script src="/main-functions.js"></script>
+  <link rel="stylesheet" type="text/css" href="/main-styles.css">
   <link rel="icon" type="img" href="Shakumant-logo-favicon.png">
 </head>
 
 <body>
-
-    <div class="column content">
+  <div class="smallheader">
+    <a href="/home.html" class="homelink">
+      <img class="homelinklogo"
+	   src="/Shakumant-logo-and-text.svg" alt="Shakumant Software logo" />
+    </a>
+  </div>
+    <div class="row">
       <div class="chosen" id="Visualizations">
 	<h1>Visualizations from  <i>Data Structures and Algorithms in Python</i></h1>
-	<p class="chosen">
-	  Press the Run buttton below to see some data structure and
-	  algorithm visualizations for the upcoming texbook:
-	  <i>Data Structures and Algorithms in Python</i>
-	  by John Canning, Alan Broder, and Robert Lafore.
-	</p>
+	<div class="rowmenu">
+	  <ul class="menulist">
+	    <li class="button" id="macOS_download"
+		onclick="download_file('/downloads/DatastructureVisualizations.dmg')">
+	      Download Datastructure Visualizations for macOS
+	    </li>
+	    <li class="button" id="windows_download"
+		onclick="alert('Sorry. This download is not yet available.')">
+	      TBD: Datastructure Visualizations for Windows
+	    </li>
+	  </ul>
+	</div>
+	<div class="row">
+	  <p class="centered">
+	    Press the ▶ Run buttton below to see some data structure and
+	    algorithm visualizations for the upcoming texbook:
+	    <i>Data Structures and Algorithms in Python</i>
+	    by John Canning, Alan Broder, and Robert Lafore.
+	  </p>
 
-	<!-- &runMode=console 	-->
-
-	<iframe src="https://trinket.io/embed/pygame/04ec195808?outputOnly=true&start=result" width="100%" height="800" frameborder="0" marginwidth="0" marginheight="0" allowfullscreen>
-	</iframe>
-
+	  <iframe src="https://trinket.io/embed/pygame/04ec195808?outputOnly=true&start=result" width="100%" height="800" frameborder="0" marginwidth="0" marginheight="0" allowfullscreen>
+	  </iframe>
+	</div>
       </div>
     </div>
   </div>
