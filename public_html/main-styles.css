@@ -86,18 +86,20 @@ img.homelinklogo {
     display: block;
     margin: auto;
 }
+.columnmenu {
+    width: auto;
+    margin: auto;
+}
 .content {
     width: 100%;
 }
-.menu ul, .rowmenu ul {
+.menu ul, .rowmenu ul, .columnmenu ul {
     list-style-type: none;
     margin: 0;
     padding: 0;
 }
 .menu li, .rowmenu li {
     padding: 3px;
-}
-.menu li:hover, .rowmenu li:hover {
 }
 
 h1 {
@@ -128,6 +130,11 @@ p {
     }
     .rowmenu li {
 	max-width: 30%;
+	padding: 8px;
+	margin-left: 10px;
+	margin-right: 10px;
+    }
+    .columnmenu li {
 	padding: 8px;
 	margin-left: 10px;
 	margin-right: 10px;

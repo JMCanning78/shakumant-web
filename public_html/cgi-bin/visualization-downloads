@@ -1,0 +1,107 @@
+#!/usr/bin/env python2
+# -*- coding: utf-8 -*-
+
+import sys, os, urllib, glob, time
+from subprocess import *
+
+try:
+    a = check_output
+except:
+    def check_output(*popenargs, **kwargs):
+        kwargs['stdout'] = PIPE
+        p = Popen(*popenargs, **kwargs)
+        (stdout, stderr) = p.communicate()
+        if p.returncode != 0:
+            raise CalledProcessError(
+                "Error in check_output; stdout = '{0}', stderr = '{1}'".format(
+                    stdout, stderr))
+        return stdout.decode() if isinstance(stdout, bytes) else stdout
+
+def response_header():
+    print "Content-Type: text/html; charset=utf-8"
+    print "Status: 200"
+    print ""
+    
+def document_header(config={'title': 'Visualization Downloads Archive'}):
+    print """<!doctype html>
+<html>
+<head>
+  <title>{title}</title>
+  <script src="/main-functions.js"></script>
+  <link rel="stylesheet" type="text/css" href="/main-styles.css">
+  <link rel="icon" type="img" href="/Shakumant-logo-favicon.png">
+</head>
+""".format(**config)
+
+def document_headrow():
+    print '''
+  <div class="smallheader">
+    <a href="/home.html" class="homelink">
+      <img class="homelinklogo"
+	   src="/Shakumant-logo-and-text.svg" alt="Shakumant Software logo" />
+    </a>
+  </div>'''
+    
+def document_footrow():
+    print '<div class="footer">'
+    print '<p class="footer">Copyright © {0}</p>'.format(time.gmtime().tm_year)
+    print '</div>'
+    
+def document_footer():
+    print "</html>"
+
+def document_content(config, macDownloads, windowsDownloads):
+    print "<body>"
+    document_headrow()
+    print "<H1>{title}</H1>".format(**config)
+    for name, files in (('macOS', macDownloads), ('Windows', windowsDownloads)):
+        print ('<div class="columnmenu" id="{0}_downloads">\n'
+               '<H2>for {0}</H2>').format(name)
+        print '<ul class="menulist">\n{0}\n</ul></div>'.format(
+            '\n'.join(('<li class="button" onclick="download_file({0!r})">\n'
+                       'Download {1} &nbsp;</li>').format(f, os.path.basename(f))
+                      for f in files))
+    document_footrow()
+    print "</body>"
+
+logfile = None
+def log(msg, newline=True):
+    global logfile
+    if logfile:
+        logfile.write('{0}{1}'.format(msg, '\n' if newline else ''))
+    
+if __name__ == '__main__':
+    executable = os.path.basename(sys.argv[0])
+    logfile = open('/tmp/{0}.log'.format(executable), 'a')
+    log('\n' + '=' * 78)
+    log(check_output(['date']), newline=False)
+    log('Called {0}'.format(
+        ' '.join("{0!r}".format(x) if ' ' in x else x
+                 for x in [executable] + sys.argv[1:])))
+    if '-e' not in sys.argv[1:]:
+        log('Environment:')
+        for key in sorted(os.environ):
+            log('{0:20s} = {1}'.format(key, os.environ[key]))
+    dirs = [arg for arg in sys.argv[1:] if os.path.isdir(arg)]
+    if len(dirs) == 0:
+        dirs = ['../downloads']
+    
+    request_method = os.environ.get('REQUEST_METHOD', '?')
+    if request_method in ('GET', 'PUT'):
+        response_header()
+        config={'title': 'Visualization Downloads Archive'}
+        document_header(config=config)
+        macDownloads=[
+            f for dir in dirs
+            for f in glob.glob(os.path.join(dir, '*_[0-9][0-9].dmg'))]
+        macDownloads.sort(key=os.path.basename, reverse=True)
+        windowsDownloads=[
+            f for dir in dirs
+            for f in glob.glob(os.path.join(dir, '*_[0-9][0-9].zip'))]
+        windowsDownloads.sort(key=os.path.basename, reverse=True)
+        document_content(config, macDownloads, windowsDownloads)
+        document_footer()
+    else:
+        log('Request method {0} {1}'.format(
+            request_method, 'unset' if request_method == '?' else 'unknown'))
+        log('Ignoring request')
