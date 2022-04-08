@@ -6,7 +6,7 @@ import http.server, argparse, os, sys
 
 serverDirectory = None
 
-class simpleHTTPRequestHandler(http.server.SimpleHTTPRequestHandler):
+class simpleHTTPRequestHandler(http.server.CGIHTTPRequestHandler):
     def __init__(self, *args, **kwargs):
        super().__init__(*args, directory=serverDirectory or '.', **kwargs)
    
