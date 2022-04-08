@@ -18,6 +18,17 @@ body, h1, p {
 .button {
     text-align: center;
     border-radius: 6px;
+    padding: 8px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    margin-left: 10px;
+    margin-right: 10px;
+    background-color: #3385a5;
+    color: #eefff0;
+}
+
+.button:hover {
+    background-color: #0066aa;
 }
 
 li {
@@ -85,13 +96,8 @@ img.homelinklogo {
 }
 .menu li, .rowmenu li {
     padding: 3px;
-    margin-top: 10px;
-    margin-bottom: 10px;
-    background-color: #3385a5;
-    color: #eefff0;
 }
 .menu li:hover, .rowmenu li:hover {
-    background-color: #0066aa;
 }
 
 h1 {
