@@ -59,7 +59,7 @@ def document_content(config, macDownloads, windowsDownloads):
                '<H2>for {0}</H2>').format(name)
         print '<ul class="menulist">\n{0}\n</ul></div>'.format(
             '\n'.join(('<li class="button" onclick="download_file({0!r})">\n'
-                       'Download {1} &nbsp;</li>').format(f, os.path.basename(f))
+                       'Download {1}</li>').format(f, os.path.basename(f))
                       for f in files))
     document_footrow()
     print "</body>"
@@ -99,6 +99,8 @@ if __name__ == '__main__':
             f for dir in dirs
             for f in glob.glob(os.path.join(dir, '*_[0-9][0-9].zip'))]
         windowsDownloads.sort(key=os.path.basename, reverse=True)
+        log('Found {0} macOS and {1} Windows download(s) among {2}'.format(
+            len(macDownloads), len(windowsDownloads), dirs))
         document_content(config, macDownloads, windowsDownloads)
         document_footer()
     else:
