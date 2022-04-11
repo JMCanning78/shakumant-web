@@ -98,6 +98,9 @@ img.homelinklogo {
     margin: 0;
     padding: 0;
 }
+.columnmenu ul {
+    display: inline-block;
+}
 .menu li, .rowmenu li {
     padding: 3px;
 }
