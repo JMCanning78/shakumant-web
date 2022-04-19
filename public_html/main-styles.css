@@ -105,6 +105,11 @@ img.homelinklogo {
     padding: 3px;
 }
 
+.footnote {
+    font-size: x-small;
+    color: lavender;
+}
+
 h1 {
   font-size: 1.4em;
   font-weight: 300;
