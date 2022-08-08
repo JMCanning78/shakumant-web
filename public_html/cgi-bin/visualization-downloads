@@ -1,12 +1,10 @@
-#!/usr/bin/env python2
+#!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
 import sys, os, urllib, glob, time
 from subprocess import *
 
-try:
-    a = check_output
-except:
+if sys.version_info[0] < 3:
     def check_output(*popenargs, **kwargs):
         kwargs['stdout'] = PIPE
         p = Popen(*popenargs, **kwargs)
@@ -17,13 +15,22 @@ except:
                     stdout, stderr))
         return stdout.decode() if isinstance(stdout, bytes) else stdout
 
+    def output(*args, **kwargs):
+        to=kwargs.get('file', sys.stdout)
+        sep=kwargs.get('sep', ' ')
+        end=kwargs.get('end', '\n')
+        print >> to, sep.join(str(a) for a in args) + end,
+        
+else:
+    output = getattr(globals()['__builtins__'], 'print')
+    
 def response_header():
-    print "Content-Type: text/html; charset=utf-8"
-    print "Status: 200"
-    print ""
+    output("Content-Type: text/html; charset=utf-8")
+    output("Status: 200")
+    output("")
     
 def document_header(config={'title': 'Visualization Downloads Archive'}):
-    print """<!doctype html>
+    output("""<!doctype html>
 <html>
 <head>
   <title>{title}</title>
@@ -31,38 +38,41 @@ def document_header(config={'title': 'Visualization Downloads Archive'}):
   <link rel="stylesheet" type="text/css" href="/main-styles.css">
   <link rel="icon" type="img" href="/Shakumant-logo-favicon.png">
 </head>
-""".format(**config)
+""".format(**config))
 
 def document_headrow():
-    print '''
+    output('''
   <div class="smallheader">
     <a href="/home.html" class="homelink">
       <img class="homelinklogo"
 	   src="/Shakumant-logo-and-text.svg" alt="Shakumant Software logo" />
     </a>
-  </div>'''
+  </div>''')
     
 def document_footrow():
-    print '<div class="footer">'
-    print '<p class="footer">Copyright © {0}</p>'.format(time.gmtime().tm_year)
-    print '</div>'
+    output('<div class="footer">')
+    output('<p class="footer">Copyright © {0}</p>'.format(time.gmtime().tm_year))
+    output('</div>')
     
 def document_footer():
-    print "</html>"
+    output("</html>")
 
-def document_content(config, macDownloads, windowsDownloads):
-    print "<body>"
+def document_content(config, macDownloads, windowsDownloads, otherDownloads=()):
+    output("<body>")
     document_headrow()
-    print "<H1>{title}</H1>".format(**config)
-    for name, files in (('macOS', macDownloads), ('Windows', windowsDownloads)):
-        print ('<div class="columnmenu" id="{0}_downloads">\n'
-               '<H2>for {0}</H2>').format(name)
-        print '<ul class="menulist">\n{0}\n</ul></div>'.format(
+    output("<H1>{title}</H1>".format(**config))
+    todo = (('macOS', macDownloads), ('Windows', windowsDownloads))
+    if otherDownloads:
+        todo += (('Other', otherDownloads),)
+    for name, files in todo:
+        output(('<div class="columnmenu" id="{0}_downloads">\n'
+                '<H2>for {0}</H2>').format(name))
+        output('<ul class="menulist">\n{0}\n</ul></div>'.format(
             '\n'.join(('<li class="button" onclick="download_file({0!r})">\n'
                        'Download {1}</li>').format(f, os.path.basename(f))
-                      for f in files))
+                      for f in files)))
     document_footrow()
-    print "</body>"
+    output("</body>")
 
 logfile = None
 def log(msg, newline=True):
@@ -78,6 +88,7 @@ if __name__ == '__main__':
     log('Called {0}'.format(
         ' '.join("{0!r}".format(x) if ' ' in x else x
                  for x in [executable] + sys.argv[1:])))
+    log('Python version: {0}'.format(sys.version_info))
     if '-e' not in sys.argv[1:]:
         log('Environment:')
         for key in sorted(os.environ):
@@ -91,17 +102,24 @@ if __name__ == '__main__':
         response_header()
         config={'title': 'Visualization Downloads Archive'}
         document_header(config=config)
-        macDownloads=[
-            f for dir in dirs
-            for f in glob.glob(os.path.join(dir, '*_[0-9][0-9].dmg'))]
-        macDownloads.sort(key=os.path.basename, reverse=True)
-        windowsDownloads=[
-            f for dir in dirs
-            for f in glob.glob(os.path.join(dir, '*_[0-9][0-9].zip'))]
-        windowsDownloads.sort(key=os.path.basename, reverse=True)
-        log('Found {0} macOS and {1} Windows download(s) among {2}'.format(
-            len(macDownloads), len(windowsDownloads), dirs))
-        document_content(config, macDownloads, windowsDownloads)
+        sections = {'mac': '*_[0-9][0-9].dmg', 
+                    'win': '*_[0-9][0-9].zip',
+                    'other': '*.zip'}
+        last = 'other'
+        done = set()
+        for section in list(k for k in sections if k != last) + [last]:
+            downloads=[f for dir in dirs
+                       for f in glob.glob(os.path.join(dir, sections[section]))
+                       if not os.path.islink(f) and f not in done]
+            downloads.sort(key=os.path.basename, reverse=True)
+            sections[section] = downloads
+            done |= set(downloads)
+        log('Found {0} among {1}'
+            .format(', '.join('{0} {1}'.format(str(len(sections[k])), k)
+                              for k in sections),
+                    dirs))
+        document_content(config, sections['mac'], sections['win'],
+                         otherDownloads=sections['other'])
         document_footer()
     else:
         log('Request method {0} {1}'.format(
