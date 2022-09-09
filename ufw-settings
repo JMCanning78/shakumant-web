@@ -1,0 +1,36 @@
+# Run this as root or with sudo
+
+echo ======= Lock down everything ======= 
+ufw default deny incoming
+ufw default deny outgoing
+
+echo ======= Allow expected incoming traffic =======
+echo SSH
+ufw allow OpenSSH
+
+echo Web server
+ufw allow "Apache Full"
+
+echo Webmin on port 10000
+ufw allow 10000/tcp
+
+echo ======= Allow expected outbound traffic ======= 
+echo SMTP email
+ufw allow out 25/tcp
+ufw allow out 465/tcp
+
+echo Web access for apt updates
+ufw allow out "Apache Full"
+
+echo DNS
+ufw allow out 53
+ufw allow out 853/tcp
+
+echo NTP
+ufw allow out 123/tcp
+
+echo Enable the firewall
+ufw enable
+
+# Report results
+# ufw status
