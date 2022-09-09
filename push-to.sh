@@ -14,6 +14,7 @@ cat - > ${exclude_patterns} <<EOF
 website.db
 settings.py
 __pycache__
+mah*
 *.xcf
 *~
 EOF
