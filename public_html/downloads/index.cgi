@@ -77,7 +77,9 @@ def document_content(config, sections, other_info=()):
                            time.ctime(os.stat(f).st_mtime))
                       for f in section['downloads'])))
     for i, info in enumerate(other_info):
-        output('<div class="columnmenu" id="otherinfo_{}">\n<p>{}</p>\n</div>'
+        output('''<div class="columnmenu" id="otherinfo_{}">
+                  <hr><p class="centered">{}</p>
+                  </div>'''
                .format(i + 1, info))
     document_footrow()
     output("</body>")
