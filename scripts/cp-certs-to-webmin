@@ -1,0 +1,74 @@
+#! /bin/bash
+# Copy letsencrypt certificate used for main website to be used by
+# webmin service
+
+echo "This script must be run as root or with sudo to succeed!"
+if (( $EUID != 0 )) ; then
+    echo "Effective user ID is $EUID"
+    exit
+fi
+
+ARCHIVE_DIR=/etc/letsencrypt/archive
+WEBMIN_DIR=/etc/webmin
+WEBMIN_CERT_PREFIX="letsencrypt-"
+
+# Find hosts with archived letsencrypt certificates
+HOSTS=(`ls $ARCHIVE_DIR`)
+
+# We use the first host in the archive
+HOSTNUM=0
+HOST=${HOSTS[$HOSTNUM]}
+
+# Find certs (cannot use wildcard so get entire directory and filter)
+HOST_ARCHIVE=(`ls $ARCHIVE_DIR/$HOST`)
+CERT=""
+KEY=""
+
+for f in ${HOST_ARCHIVE[*]}; do
+    if [[ "$f" =~ fullchain[0-9]*.pem ]] ; then
+	CERT=$f
+    elif [[ "$f" =~ privkey[0-9]*.pem ]] ; then
+	KEY=$f
+    fi
+done
+if [[ "$CERT" == "" || "$KEY" == "" ]] ; then
+    echo Could not find fullchain.pem or privkey.pem among the following
+    echo ${HOST_ARCHIVE[*]}
+    exit -1
+fi
+
+if (cmp -s $ARCHIVE_DIR/$HOST/$CERT \
+	$WEBMIN_DIR/${WEBMIN_CERT_PREFIX}cert.pem) ; then
+    echo $ARCHIVE_DIR/$HOST/$CERT is identical to \
+	 $WEBMIN_DIR/${WEBMIN_CERT_PREFIX}cert.pem
+    echo Skipping copy
+    exit
+else
+    echo $ARCHIVE_DIR/$HOST/$CERT differs from \
+	 $WEBMIN_DIR/${WEBMIN_CERT_PREFIX}cert.pem
+fi
+    
+pushd $WEBMIN_DIR > /dev/null
+OLD_WEBMIN_CERTS=(`ls -t ${WEBMIN_CERT_PREFIX}cert-*.pem`)
+if [[ "${OLD_WEBMIN_CERTS}" == "" ]] ; then
+    VERSION=0
+else
+    SUFFIX=${OLD_WEBMIN_CERTS/${CERT_PREFIX}cert-/}
+    ((VERSION = ${SUFFIX/.pem/} + 1))
+fi
+
+echo In $WEBMIN_DIR ...
+for kind in cert key ; do
+    echo Moving ${WEBMIN_CERT_PREFIX}${kind}.pem to \
+	 ${WEBMIN_CERT_PREFIX}${kind}-${VERSION}.pem
+    mv ${WEBMIN_CERT_PREFIX}${kind}.pem \
+       ${WEBMIN_CERT_PREFIX}${kind}-${VERSION}.pem
+done
+
+echo Copying certificate for host $HOST using $CERT and $KEY
+cp -p $ARCHIVE_DIR/$HOST/$CERT $WEBMIN_DIR/${WEBMIN_CERT_PREFIX}cert.pem
+cp -p $ARCHIVE_DIR/$HOST/$KEY $WEBMIN_DIR/${WEBMIN_CERT_PREFIX}key.pem
+popd > /dev/null
+
+echo Restarting the webmin daemon
+webmin restart
