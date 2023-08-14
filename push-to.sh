@@ -41,7 +41,7 @@ while (( $# > 0 )); do
 	ssh ${destHost} \
 	    "(cd ${destDir}; tar --exclude-from ~/.exclude -x -v -f -)"
     
-    echo "Content pushed to ${destHost}:${destDir}"
+    echo "Content pushed to ${destHost}:${destDir} on" `date`
 done
 
 rm ${exclude_patterns}
