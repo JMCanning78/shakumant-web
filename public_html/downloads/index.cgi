@@ -19,6 +19,7 @@ sections = [
 ]
 
 output = print
+time_format = '%a %b %d %Y %H:%M:%S %z'
 
 def response_header():
     output("Content-Type: text/html; charset=utf-8")
@@ -74,7 +75,8 @@ def document_content(config, sections, other_info=()):
             '\n'.join(('<li class="button" onclick="download_file({0!r})">\n'
                        'Download {0}</li>Updated: {1}').format(
                            os.path.basename(f),
-                           time.ctime(os.stat(f).st_mtime))
+                           time.strftime(time_format,
+                                         time.gmtime(os.stat(f).st_mtime)))
                       for f in section['downloads'])))
     for i, info in enumerate(other_info):
         output('''<div class="columnmenu" id="otherinfo_{}">
@@ -95,7 +97,7 @@ if __name__ == '__main__':
     executable = os.path.basename(sys.argv[0])
     logfile = open('/tmp/{0}.log'.format(executable), 'a')
     log('\n' + '=' * 78)
-    server_datetime = check_output(['date']).decode().strip()
+    server_datetime = check_output(['date', '+' + time_format]).decode().strip()
     log(server_datetime, '', newline=False)
     log('Called {0}'.format(
         ' '.join("{0!r}".format(x) if ' ' in x else x
