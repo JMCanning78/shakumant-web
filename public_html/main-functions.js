@@ -42,4 +42,9 @@ function download_file(path) {
     window.open(path, '')
 }
 
-
+function update_copyright() {
+    const spanElement = document.getElementById("copyright_year");
+    if (spanElement) {
+        spanElement.textContent = new Date().getFullYear();
+    }
+}

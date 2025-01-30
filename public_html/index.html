@@ -107,10 +107,13 @@
   </div>
 
   <div class="footer">
-    <p class="footer">Copyright © 2024
+    <p class="footer">Copyright © <span id="copyright_year">2024</span>
     </p>
   </div>
   
-  <script>display_choice('Home')</script>
+  <script>
+    document.addEventListener("DOMContentLoaded", update_copyright);
+    display_choice('Home')
+  </script>
 </body>
 </html>
